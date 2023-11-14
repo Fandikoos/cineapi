@@ -1,15 +1,664 @@
 openapi: 3.0.1
 info:
-  title: Sample API
-  description: API description in Markdown.
+  title: Cine API
+  description: API para la gestión de cines
   version: 1.0.0
 servers:
-  - url: 'https://api.example.com'
+  - url: 'https://api.tucine.com'
+tags:
+  - name: showtime
+    description: Operaciones para gestionar las funciones de películas
+  - name: users
+    description: Operaciones para gestionar los usuarios de la aplicacion
+  - name: booking
+    description: Gestión de reservas para ver funciones por parte de los usuarios
+  - name: movie
+    description: Gestión de las películas disponibles en el cine
+  - name: cinema
+    description: Gestión del cine
 paths:
-  /users:
+  /showtime:
     get:
-      summary: Returns a list of users.
-      description: Optional extended description in Markdown.
+      tags:
+        - showtime
+      summary: Listado de funciones de películas.
+      description: Esta operación permite consultar el listado completo de funciones con toda su información.
       responses:
         '200':
-          description: OK
+          description: Devuelve la lista completa de funciones registradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Showtime'
+    post:
+      tags:
+        - showtime
+      summary: Registrar una nueva funcion
+      operationId: postShowtime
+      requestBody:
+        description: Información de la nueva función
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Showtime'
+      responses:
+        201:
+          description: Función registrada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+    delete:
+      tags:
+        - showtime
+      summary: Dar de baja una función
+      operationId: deleteShowtime
+      parameters:
+        - name: showtimeId
+          in: path
+          description: Identificador de la función
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+        404:
+          description: No se ha encontrado la función
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar este usuario"
+    put:
+      tags:
+        - showtime
+      summary: Modifica una función
+      description: Modifica los datos de una función concreta
+      operationId: modifyShowtime
+      parameters:
+        - name: showtimeId
+          in: path
+          description: Identificador de la función
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de función actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Showtime'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+        404:
+          description: No se ha encontrado esta función
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar la función"
+
+  /users:
+    get:
+      tags:
+        - users
+      summary: Listado de usuarios.
+      description: Esta operación permite consultar el listado completo de usuarios con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de usuarios registrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - users
+      summary: Registrar un nuevo usuario
+      operationId: postUser
+      requestBody:
+        description: Información del nuevo usuario
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: Usuario registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+        - users
+      summary: Dar de baja a un usuario
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: No se ha encontrado al usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar este usuario"
+    put:
+      tags:
+        - users
+      summary: Modifica un usuario
+      description: Modifica los datos de un usuario concreto
+      operationId: modifyUser
+      parameters:
+        - name: userId
+          in: path
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de usuario actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: No se ha encontrado este usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar el usuario"
+
+  /booking:
+    get:
+      tags:
+        - booking
+      summary: Listado de reservas.
+      description: Esta operación permite consultar el listado completo de reservas con toda su información.
+      responses:
+        200:
+          description: Devuelve la lista completa de películas registradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+    post:
+      tags:
+        - booking
+      summary: Registrar una nueva reserva
+      operationId: postBooking
+      requestBody:
+        description: Información de la nueva reserva
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        201:
+          description: Reserva registrada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+    delete:
+      tags:
+        - booking
+      summary: Dar de baja una reserva
+      operationId: deleteBooking
+      parameters:
+        - name: bookingId
+          in: path
+          description: Identificador de la reserva
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        404:
+          description: No se ha encontrado la reserva
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta reserva"
+    put:
+      tags:
+        - booking
+      summary: Modifica una reserva
+      description: Modifica los datos de una reserva concreta
+      operationId: modifyBooking
+      parameters:
+        - name: bookingId
+          in: path
+          description: Identificador de la reserva
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de reserva actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        404:
+          description: No se ha encontrado esta reserva
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta reserva"
+  /movie:
+    get:
+      tags:
+        - movie
+      summary: Listado de películas.
+      description: Esta operación permite consultar el listado completo de películas con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de películas registradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+    post:
+      tags:
+        - movie
+      summary: Registrar una nueva película
+      operationId: postMovie
+      requestBody:
+        description: Información de la nueva película
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        201:
+          description: Película registrada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+    delete:
+      tags:
+        - movie
+      summary: Dar de baja una película
+      operationId: deleteMovie
+      parameters:
+        - name: movieId
+          in: path
+          description: Identificador de la película
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        404:
+          description: No se ha encontrado la película
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta película"
+    put:
+      tags:
+        - movie
+      summary: Modifica una película
+      description: Modifica los datos de una película concreta
+      operationId: modifyMovie
+      parameters:
+        - name: movieId
+          in: path
+          description: Identificador de la película
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos de película actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        404:
+          description: No se ha encontrado esta película
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar esta película"
+
+  /cinema:
+    get:
+      tags:
+        - cinema
+      summary: Listado de cines.
+      description: Esta operación permite consultar el listado completo de cines con toda su información.
+      responses:
+        '200':
+          description: Devuelve la lista completa de cines registrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cinema'
+    post:
+      tags:
+        - cinema
+      summary: Registrar un nuevo cine
+      operationId: postCinema
+      requestBody:
+        description: Información del nuevo cine
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cinema'
+      responses:
+        201:
+          description: Cine registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cinema'
+    delete:
+      tags:
+        - cinema
+      summary: Dar de baja un cine
+      operationId: deleteCinema
+      parameters:
+        - name: CinemaId
+          in: path
+          description: Identificador del cine
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cinema'
+        404:
+          description: No se ha encontrado al cine
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar el cine"
+    put:
+      tags:
+        - cinema
+      summary: Modifica un cine
+      description: Modifica los datos de un cine concreto
+      operationId: modifyCinema
+      parameters:
+        - name: cinemaId
+          in: path
+          description: Identificador del cine
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+      requestBody:
+        description: Datos del cine actualizados
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cinema'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cinema'
+        404:
+          description: No se ha encontrado este cine
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFound'
+              example:
+                internalError: 1
+                message: "No se ha podido encontrar el usuario"
+
+
+components:
+  schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+        user:
+          type: integer
+          format: int32
+          example: 2
+        showtime:
+          type: integer
+          format: int32
+          example: 3
+        bookingDate:
+          type: string
+          example: 2023-10-10
+        numTickets:
+          type: number
+          format: int32
+          example: 5
+        customerName:
+          type: string
+          example: Daniel
+    Movie:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+        title:
+          type: string
+          example: Nombre de película
+        director:
+          type: string
+          example: Director de la película
+        genre:
+          type: string
+          example: comedia
+        duration:
+          type: number
+          format: int32
+          example: 120
+        releaseDate:
+          type: string
+          example: 2022-05-18
+    Showtime:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+        screenNumber:
+          type: number
+          format: int32
+          example: 1
+        startTime:
+          type: string
+          example: 2023-11-14
+        price:
+          type: number
+          format: float
+          example: 4.5
+        isSoldOut:
+          type: boolean
+        endTime:
+          type: string
+          example: 2023-12-20
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+        username:
+          type: string
+          example: Danielfgrt
+        password:
+          type: string
+        email:
+          type: string
+          example: dfguuuyy@gmail.com
+        phone:
+          type: number
+          format: int32
+          example: 675231890
+        registrationDate:
+          type: string
+          example: 2023-04-10
+    Cinema:
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: Palafox
+        capacity:
+          type: number
+          format: int32
+          example: 200
+        location:
+          type: string
+          example: Calle Palafox
+        openingDate:
+          type: string
+          example: 2020-05-01
+        rating:
+          type: number
+          format: float
+          example: 9.2
+    ErrorResponse:
+      properties:
+        internalError:
+          type: number
+          format: int32
+        message:
+          type: string
+      type: object
+    ResourceNotFound:
+      allOf:
+        - type: object
+        - $ref: '#/components/schemas/ErrorResponse'
