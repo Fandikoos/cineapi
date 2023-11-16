@@ -53,8 +53,8 @@ public class ShowtimeService {
             existingShowtime.setScreenName(newShowtime.getScreenName());
             existingShowtime.setStartTime(newShowtime.getStartTime());
             existingShowtime.setPrice(newShowtime.getPrice());
-            existingShowtime.setSoldOut(newShowtime.isSoldOut());
             existingShowtime.setEndTime(newShowtime.getEndTime());
+            showtimeRepository.save(existingShowtime);
         }
     }
 }
