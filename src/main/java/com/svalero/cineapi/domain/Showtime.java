@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -20,7 +19,7 @@ public class Showtime {
     //Obligatorio
     private long id;
     @Column
-    private int screenNumber;
+    private String screenName;
     @Column
     //Obligatorio
     private float price;
