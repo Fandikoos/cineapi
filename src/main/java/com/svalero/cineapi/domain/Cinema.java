@@ -17,8 +17,10 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
+    //Obligatorio
     private int capacity;
     @Column
+    //Obligatorio
     private String name;
     @Column
     private String location;

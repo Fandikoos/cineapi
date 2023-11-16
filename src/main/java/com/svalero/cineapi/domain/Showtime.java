@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -16,17 +17,19 @@ public class Showtime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Obligatorio
     private long id;
     @Column
     private int screenNumber;
     @Column
+    //Obligatorio
     private float price;
     @Column
     private boolean isSoldOut;
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private LocalDateTime startTime;
     @Column(name = "end_time")
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @ManyToMany(mappedBy = "showtimes")
     private List<Booking> bookings;

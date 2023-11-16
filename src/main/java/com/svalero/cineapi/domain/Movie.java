@@ -19,12 +19,14 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
+    //Obligatorio
     private String title;
     @Column
     private String director;
     @Column
     private String genre;
     @Column
+    //Obligatorio
     private int duration;
     @Column(name = "release_date")
     private LocalDate releaseDate;

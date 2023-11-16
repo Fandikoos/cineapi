@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -19,9 +21,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
+    //Obligatorio
     private int numTickets;
     @Column(name = "booking_date")
-    private LocalDate bookingDate;
+    //Obligatorio
+    private LocalDateTime bookingDate;
 
     @JsonBackReference("booking_user")
     @ManyToOne

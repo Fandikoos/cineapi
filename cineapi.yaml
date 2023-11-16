@@ -1,3 +1,5 @@
+#Preguntar si todas las operaciones tienen que llevar el error 500, la 204 si tiene que responder con algo y cuando hay que utilizar el error
+#400 y cuando el 404. El 404 es para el post y put cuando no se pone un campo obligatorio. Añadir a los errores mensajes abajo
 openapi: 3.0.1
 info:
   title: Cine API
@@ -31,7 +33,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Showtime'
+                  $ref: '#/components/schemas/ShowtimeOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     post:
       tags:
         - showtime
@@ -43,14 +52,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Showtime'
+              $ref: '#/components/schemas/ShowtimeIn'
       responses:
-        201:
+        '201':
           description: Función registrada correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Showtime'
+                $ref: '#/components/schemas/ShowtimeOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     delete:
       tags:
         - showtime
@@ -66,13 +82,9 @@ paths:
             format: int32
             example: 1
       responses:
-        200:
+        '204':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Showtime'
-        404:
+        '404':
           description: No se ha encontrado la función
           content:
             application/json:
@@ -80,7 +92,14 @@ paths:
                 $ref: '#/components/schemas/ResourceNotFound'
               example:
                 internalError: 1
-                message: "No se ha podido encontrar este usuario"
+                message: "No se ha podido encontrar esta función"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     put:
       tags:
         - showtime
@@ -102,15 +121,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Showtime'
+              $ref: '#/components/schemas/ShowtimeIn'
       responses:
-        200:
+        '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Showtime'
-        404:
+                $ref: '#/components/schemas/ShowtimeOut'
+        '404':
           description: No se ha encontrado esta función
           content:
             application/json:
@@ -119,6 +138,12 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar la función"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
 
   /users:
     get:
@@ -134,7 +159,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     post:
       tags:
         - users
@@ -146,14 +178,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserIn'
       responses:
-        201:
+        '201':
           description: Usuario registrado correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     delete:
       tags:
         - users
@@ -169,13 +208,9 @@ paths:
             format: int32
             example: 1
       responses:
-        200:
+        '204':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        404:
+        '404':
           description: No se ha encontrado al usuario
           content:
             application/json:
@@ -184,6 +219,13 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar este usuario"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     put:
       tags:
         - users
@@ -205,15 +247,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserIn'
       responses:
-        200:
+        '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        404:
+                $ref: '#/components/schemas/UserOut'
+        '404':
           description: No se ha encontrado este usuario
           content:
             application/json:
@@ -222,6 +264,12 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar el usuario"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
 
   /booking:
     get:
@@ -230,14 +278,21 @@ paths:
       summary: Listado de reservas.
       description: Esta operación permite consultar el listado completo de reservas con toda su información.
       responses:
-        200:
+        '200':
           description: Devuelve la lista completa de películas registradas
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Booking'
+                  $ref: '#/components/schemas/BookingOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     post:
       tags:
         - booking
@@ -249,14 +304,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Booking'
+              $ref: '#/components/schemas/BookingIn'
       responses:
-        201:
+        '201':
           description: Reserva registrada correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Booking'
+                $ref: '#/components/schemas/BookingOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     delete:
       tags:
         - booking
@@ -272,13 +334,9 @@ paths:
             format: int32
             example: 1
       responses:
-        200:
+        '204':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Booking'
-        404:
+        '404':
           description: No se ha encontrado la reserva
           content:
             application/json:
@@ -287,6 +345,13 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar esta reserva"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     put:
       tags:
         - booking
@@ -308,15 +373,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Booking'
+              $ref: '#/components/schemas/BookingIn'
       responses:
-        200:
+        '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Booking'
-        404:
+                $ref: '#/components/schemas/BookingOut'
+        '404':
           description: No se ha encontrado esta reserva
           content:
             application/json:
@@ -325,6 +390,13 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar esta reserva"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
   /movie:
     get:
       tags:
@@ -339,7 +411,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Movie'
+                  $ref: '#/components/schemas/MovieOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     post:
       tags:
         - movie
@@ -351,14 +430,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Movie'
+              $ref: '#/components/schemas/MovieIn'
       responses:
-        201:
+        '201':
           description: Película registrada correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/MovieOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     delete:
       tags:
         - movie
@@ -374,13 +460,9 @@ paths:
             format: int32
             example: 1
       responses:
-        200:
+        '204':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Movie'
-        404:
+        '404':
           description: No se ha encontrado la película
           content:
             application/json:
@@ -389,6 +471,13 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar esta película"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     put:
       tags:
         - movie
@@ -410,15 +499,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Movie'
+              $ref: '#/components/schemas/MovieIn'
       responses:
-        200:
+        '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
-        404:
+                $ref: '#/components/schemas/MovieOut'
+        '404':
           description: No se ha encontrado esta película
           content:
             application/json:
@@ -427,6 +516,12 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar esta película"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
 
   /cinema:
     get:
@@ -442,7 +537,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Cinema'
+                  $ref: '#/components/schemas/CinemaOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     post:
       tags:
         - cinema
@@ -454,14 +556,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Cinema'
+              $ref: '#/components/schemas/CinemaIn'
       responses:
-        201:
+        '201':
           description: Cine registrado correctamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cinema'
+                $ref: '#/components/schemas/CinemaOut'
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     delete:
       tags:
         - cinema
@@ -477,13 +586,9 @@ paths:
             format: int32
             example: 1
       responses:
-        200:
+        '204':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Cinema'
-        404:
+        '404':
           description: No se ha encontrado al cine
           content:
             application/json:
@@ -492,6 +597,13 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar el cine"
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
     put:
       tags:
         - cinema
@@ -513,15 +625,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Cinema'
+              $ref: '#/components/schemas/CinemaIn'
       responses:
-        200:
+        '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cinema'
-        404:
+                $ref: '#/components/schemas/CinemaOut'
+        '404':
           description: No se ha encontrado este cine
           content:
             application/json:
@@ -530,17 +642,18 @@ paths:
               example:
                 internalError: 1
                 message: "No se ha podido encontrar el usuario"
-
+        '500':
+          description: Error interno en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
 
 components:
   schemas:
-    Booking:
+    BookingIn:
       type: object
       properties:
-        id:
-          type: number
-          format: int32
-          example: 1
         user:
           type: integer
           format: int32
@@ -559,13 +672,18 @@ components:
         customerName:
           type: string
           example: Daniel
-    Movie:
+    BookingOut:
       type: object
       properties:
         id:
           type: number
           format: int32
           example: 1
+      allOf:
+        - $ref: '#/components/schemas/BookingIn'
+    MovieIn:
+      type: object
+      properties:
         title:
           type: string
           example: Nombre de película
@@ -582,13 +700,18 @@ components:
         releaseDate:
           type: string
           example: 2022-05-18
-    Showtime:
+    MovieOut:
       type: object
       properties:
         id:
           type: number
           format: int32
           example: 1
+      allOf:
+        - $ref: '#/components/schemas/MovieIn'
+    ShowtimeIn:
+      type: object
+      properties:
         screenNumber:
           type: number
           format: int32
@@ -605,13 +728,18 @@ components:
         endTime:
           type: string
           example: 2023-12-20
-    User:
+    ShowtimeOut:
       type: object
       properties:
         id:
           type: number
           format: int32
           example: 1
+      allOf:
+        - $ref: '#/components/schemas/ShowtimeIn'
+    UserIn:
+      type: object
+      properties:
         username:
           type: string
           example: Danielfgrt
@@ -624,15 +752,20 @@ components:
           type: number
           format: int32
           example: 675231890
-        registrationDate:
-          type: string
-          example: 2023-04-10
-    Cinema:
+    UserOut:
+      type: object
       properties:
         id:
           type: number
           format: int32
           example: 1
+        registrationDate:
+          type: string
+          example: 2023-04-10
+      allOf:
+        - $ref: '#/components/schemas/UserIn'
+    CinemaIn:
+      properties:
         name:
           type: string
           example: Palafox
@@ -650,6 +783,15 @@ components:
           type: number
           format: float
           example: 9.2
+    CinemaOut:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+      allOf:
+        - $ref: '#/components/schemas/CinemaIn'
     ErrorResponse:
       properties:
         internalError:
@@ -662,3 +804,10 @@ components:
       allOf:
         - type: object
         - $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        internalError: 500
+        message: "Internal Server Error"

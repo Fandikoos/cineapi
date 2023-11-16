@@ -18,10 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
+    //Obligatorio
     private String username;
     @Column
+    //Obligatorio
     private String password;
     @Column
+    //Obligatorio
     private String email;
     @Column
     private int phone;
