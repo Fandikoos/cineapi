@@ -773,9 +773,14 @@ components:
           type: number
           format: int32
           example: 200
-        location:
-          type: string
-          example: Calle Palafox
+        latitude:
+          type: number
+          format: double
+          example: 10.829389329
+        longitude:
+          type: number
+          format: double
+          example: 5.2390932
         openingDate:
           type: string
           example: 2020-05-01

@@ -16,6 +16,8 @@ public class CinemaInDto {
     private String name;
     @NotNull(message = "Es obligatorio establecer la capacidad")
     private int capacity;
-    private String location;
+    //private String location;
+    private Double latitude;
+    private Double longitude;
     private float rating;
 }

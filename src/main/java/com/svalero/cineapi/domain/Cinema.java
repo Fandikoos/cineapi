@@ -20,8 +20,12 @@ public class Cinema {
     private String name;
     @Column
     private int capacity;
+    //@Column
+    //private String location;
     @Column
-    private String location;
+    private double latitude;
+    @Column
+    private double longitude;
     @Column
     private float rating;
     @Column(name = "opening_date")

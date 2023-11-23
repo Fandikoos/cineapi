@@ -21,7 +21,6 @@ public class UserInDto {
     @Email
     private String email;
 
-    @NotNull(message = "El telefono es obligatorio")
     private int phone;
 
 

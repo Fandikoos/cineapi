@@ -1,17 +1,12 @@
 package com.svalero.cineapi.service;
 
 import com.svalero.cineapi.domain.Cinema;
-import com.svalero.cineapi.domain.User;
 import com.svalero.cineapi.dto.CinemaInDto;
 import com.svalero.cineapi.dto.CinemaOutDto;
-import com.svalero.cineapi.dto.UserInDto;
-import com.svalero.cineapi.dto.UserOutDto;
 import com.svalero.cineapi.exception.CinemaNotFoundException;
-import com.svalero.cineapi.exception.UserNotFoundException;
 import com.svalero.cineapi.repository.CinemaRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,8 +49,9 @@ public class CinemaService {
             Cinema existingCinema = cinema.get();
             existingCinema.setName(newCinema.getName());
             existingCinema.setCapacity(newCinema.getCapacity());
-            existingCinema.setLocation(newCinema.getLocation());
-            existingCinema.setOpeningDate(newCinema.getOpeningDate());
+            existingCinema.setLatitude(newCinema.getLatitude());
+            //existingCinema.setLocation(newCinema.getLocation());
+            existingCinema.setLongitude(newCinema.getLongitude());
             existingCinema.setRating(newCinema.getRating());
             cinemaRepository.save(existingCinema);
         }

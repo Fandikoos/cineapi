@@ -14,7 +14,10 @@ public class CinemaOutDto {
     private long id;
     private String name;
     private int capacity;
-    private String location;
+    //private String location;
+
+    private double latitude;
+    private double longitude;
     private float rating;
     private LocalDate openingDate;
 }

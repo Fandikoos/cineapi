@@ -26,6 +26,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User findById(long id) throws UserNotFoundException{
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
+    }
+
     public UserOutDto saveUser(UserInDto userInDto){
         User user = new User();
         modelMapper.map(userInDto, user);
