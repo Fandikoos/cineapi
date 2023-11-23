@@ -1,6 +1,6 @@
-package com.svalero.cineapi.domain;
+package com.svalero.cineapi.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,26 +8,17 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "cinemas")
-public class Cinema {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+public class CinemaOutDto {
     private long id;
-    @Column
     private String name;
-    @Column
     private int capacity;
-    //@Column
     //private String location;
-    @Column
+
     private double latitude;
-    @Column
     private double longitude;
-    @Column
     private float rating;
-    @Column(name = "opening_date")
     private LocalDate openingDate;
 }
+

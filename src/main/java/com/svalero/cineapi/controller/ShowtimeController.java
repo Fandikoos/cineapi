@@ -32,7 +32,7 @@ public class ShowtimeController {
     @PostMapping("/showtimes")
     public ResponseEntity<ShowtimeOutDto> saveShowtime(@Valid @RequestBody ShowtimeInDto showtime){
         ShowtimeOutDto newShowtime = showtimeService.saveShowtime(showtime);
-        return new ResponseEntity<>(showtimeService.saveShowtime(showtime), HttpStatus.CREATED);
+        return new ResponseEntity<>(newShowtime, HttpStatus.CREATED);
     }
 
 
