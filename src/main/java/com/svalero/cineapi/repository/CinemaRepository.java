@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface CinemaRepository extends CrudRepository<Cinema, Long> {
     List<Cinema> findAll();
+
+    List<Cinema> findByNameAndCapacityAndRating(String name, int capacity, float rating);
 }

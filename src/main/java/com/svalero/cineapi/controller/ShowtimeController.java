@@ -25,7 +25,10 @@ public class ShowtimeController {
     private ShowtimeService showtimeService;
 
     @GetMapping("/showtimes")
-    public ResponseEntity<List<Showtime>> getAll(){
+    public ResponseEntity<List<Showtime>> getAll(@RequestParam(defaultValue = "") String screenName, @RequestParam(defaultValue = "0") float price, @RequestParam(defaultValue = "false") boolean isSoldOut){
+        if (!(screenName.isEmpty()) && (price != 0) && (!isSoldOut)){
+            return new ResponseEntity<>(showtimeService.findByscreenNamePriceAndIsSoldOut(screenName, price, false), HttpStatus.OK);
+        }
         return new ResponseEntity<>(showtimeService.findAll(), HttpStatus.OK);
     }
 

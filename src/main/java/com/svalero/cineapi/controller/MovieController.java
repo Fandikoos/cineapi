@@ -25,7 +25,10 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getAll(){
+    public ResponseEntity<List<Movie>> getAll(@RequestParam(defaultValue = "") String director, @RequestParam(defaultValue = "") String genre, @RequestParam(defaultValue = "0") int duration){
+        if (!(director.isEmpty()) && !(genre.isEmpty()) && (duration != 0)){
+            return new ResponseEntity<>(movieService.findByDirectorAndGenreAndDuration(director, genre, duration), HttpStatus.OK);
+        }
         return new ResponseEntity<>(movieService.findAll(), HttpStatus.OK);
     }
 

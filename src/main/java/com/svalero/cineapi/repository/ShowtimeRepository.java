@@ -11,4 +11,5 @@ public interface ShowtimeRepository extends CrudRepository<Showtime, Long> {
     List<Showtime> findAll();
 
     //Utilizar filtrados aqui
+    List<Showtime> findByScreenNameAndPriceAndIsSoldOut(String screenName, float price, boolean isSoldOut);
 }

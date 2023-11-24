@@ -26,6 +26,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> findByUsernameAndEmailAndPhone(String username, String email, int phone){
+        return userRepository.findByUsernameAndEmailAndPhone(username, email, phone);
+    }
+
     public User findById(long id) throws UserNotFoundException{
         return userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }

@@ -30,6 +30,10 @@ public class ShowtimeService {
         return showtimeRepository.findById(id);
     }
 
+    public List<Showtime> findByscreenNamePriceAndIsSoldOut(String screenName, float price, boolean isSoldOut){
+        return showtimeRepository.findByScreenNameAndPriceAndIsSoldOut(screenName, price, isSoldOut);
+    }
+
     public ShowtimeOutDto saveShowtime(ShowtimeInDto showtimeInDto) {
         Showtime showtime = new Showtime();
         modelMapper.map(showtimeInDto, showtime);

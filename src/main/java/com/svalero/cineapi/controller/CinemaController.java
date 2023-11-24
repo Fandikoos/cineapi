@@ -25,7 +25,10 @@ public class CinemaController {
     private CinemaService cinemaService;
 
     @GetMapping("/cinemas")
-    public ResponseEntity<List<Cinema>> getAll(){
+    public ResponseEntity<List<Cinema>> getAll(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "0") int capacity, @RequestParam(defaultValue = "0") float rating){
+        if (!(name.isEmpty()) && (capacity != 0) && (rating != 0)){
+            return new ResponseEntity<>(cinemaService.findByNameAndCapacityAndRating(name, capacity, rating), HttpStatus.OK);
+        }
         return new ResponseEntity<>(cinemaService.findAll(), HttpStatus.OK);
     }
 

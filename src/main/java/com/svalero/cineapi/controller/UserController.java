@@ -25,7 +25,10 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAll(){
+    public ResponseEntity<List<User>> getAll(@RequestParam(defaultValue = "") String username, @RequestParam(defaultValue = "") String email, @RequestParam(defaultValue = "0") int phone){
+        if (!(username.isEmpty()) && !(email.isEmpty()) && (phone != 0)){
+            return new ResponseEntity<>(userService.findByUsernameAndEmailAndPhone(username, email, phone), HttpStatus.OK);
+        }
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 

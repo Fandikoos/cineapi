@@ -10,4 +10,6 @@ import java.util.List;
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     List<Movie> findAll();
+
+    List<Movie> findByDirectorAndGenreAndDuration(String director, String genre, int duration);
 }

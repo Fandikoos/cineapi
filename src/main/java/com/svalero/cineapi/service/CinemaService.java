@@ -26,6 +26,9 @@ public class CinemaService {
         return cinemaRepository.findAll();
     }
 
+    public List<Cinema> findByNameAndCapacityAndRating(String name, int capacity, float rating){
+        return cinemaRepository.findByNameAndCapacityAndRating(name, capacity, rating);
+    }
     public CinemaOutDto saveCinema(CinemaInDto cinemaInDto){
         Cinema cinema = new Cinema();
         modelMapper.map(cinemaInDto, cinema);
