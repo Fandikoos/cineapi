@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -11,5 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingInDto {
 
+    private long id;
+    private String number;
+    private LocalDateTime bookingDate;
     private List<Long> showtimeIds;
 }

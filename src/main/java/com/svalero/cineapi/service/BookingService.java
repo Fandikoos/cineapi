@@ -34,6 +34,10 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    public List<Booking> findByIdAndNumberAndBookingDate(long id, String number, LocalDateTime bookingDate){
+        return bookingRepository.findByIdAndNumberAndBookingDate(id, number, bookingDate);
+    }
+
     public void addBooking(BookingInDto bookingInDto,long userId) throws UserNotFoundException, ShowtimeNotFoundException{
         Booking booking = new Booking();
 

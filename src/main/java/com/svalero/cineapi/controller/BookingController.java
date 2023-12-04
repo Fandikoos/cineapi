@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,11 @@ public class BookingController {
     private ShowtimeService showtimeService;
 
     @GetMapping("/bookings")
-    public List<Booking> getBookings(){
-        return bookingService.findAll();
+    public ResponseEntity<List<Booking>> getAll(@RequestParam(defaultValue = "0") long id, @RequestParam(defaultValue = "") String number, @RequestParam(defaultValue = "")LocalDateTime bookingDate) throws BookingNotFoundException{
+        if ((id != 0) && !(number.isEmpty()) && !(bookingDate.toString().isEmpty())){
+            return new ResponseEntity<>(bookingService.findByIdAndNumberAndBookingDate(id, number, bookingDate), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(bookingService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/user/{userId}/bookings")
@@ -50,15 +54,15 @@ public class BookingController {
         bookingService.modifyBooking(booking, bookingId);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> userNotFoundException(UserNotFoundException unfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(404, unfe.getMessage());
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<ErrorResponse> bookingNotFoundException(BookingNotFoundException bnfe) {
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, bnfe.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ShowtimeNotFoundException.class)
-    public ResponseEntity<ErrorResponse> showtimeNotFoundException(ShowtimeNotFoundException pnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(404, pnfe.getMessage());
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> userNotFoundException(UserNotFoundException unfe) {
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, unfe.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

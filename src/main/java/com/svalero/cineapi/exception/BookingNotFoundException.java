@@ -10,6 +10,6 @@ public class BookingNotFoundException extends Exception{
     }
 
     public BookingNotFoundException(long id){
-        super("The booking " + id + "doesn't exist");
+        super("The booking " + id + " doesn't exist");
     }
 }
