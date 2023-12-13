@@ -47,8 +47,9 @@ public class ShowtimeController {
 
     //Ojear el put que no se si funciona
     @PutMapping("/showtime/{showtimeId}")
-    public void modifyShowtime(@RequestBody Showtime showtime, @PathVariable long showtimeId){
+    public ResponseEntity<Void> modifyShowtime(@RequestBody Showtime showtime, @PathVariable long showtimeId){
         showtimeService.modifyShowtime(showtime, showtimeId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

@@ -53,7 +53,6 @@ public class CinemaService {
             existingCinema.setName(newCinema.getName());
             existingCinema.setCapacity(newCinema.getCapacity());
             existingCinema.setLatitude(newCinema.getLatitude());
-            //existingCinema.setLocation(newCinema.getLocation());
             existingCinema.setLongitude(newCinema.getLongitude());
             existingCinema.setRating(newCinema.getRating());
             cinemaRepository.save(existingCinema);

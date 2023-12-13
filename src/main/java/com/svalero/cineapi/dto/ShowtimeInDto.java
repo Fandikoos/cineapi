@@ -16,6 +16,7 @@ public class ShowtimeInDto {
     @NotNull(message = "El nombre de sala es obligatorio")
     private String screenName;
     private LocalDateTime startTime;
+    @NotNull(message = "El precio es obligatorio")
     @Min(value = 0, message = "El precio debe ser mayor que 0 euros")
     private float price;
     private boolean isSoldOut;

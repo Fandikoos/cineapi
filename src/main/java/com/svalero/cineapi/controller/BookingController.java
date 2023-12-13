@@ -3,6 +3,7 @@ package com.svalero.cineapi.controller;
 import com.svalero.cineapi.domain.Booking;
 import com.svalero.cineapi.domain.ErrorResponse;
 import com.svalero.cineapi.dto.BookingInDto;
+import com.svalero.cineapi.dto.BookingOutDto;
 import com.svalero.cineapi.exception.BookingNotFoundException;
 import com.svalero.cineapi.exception.ShowtimeNotFoundException;
 import com.svalero.cineapi.exception.UserNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.RecursiveTask;
 
 @RestController
 public class BookingController {
@@ -39,8 +41,9 @@ public class BookingController {
     }
 
     @PostMapping("/user/{userId}/bookings")
-    public void addBooking(@RequestBody BookingInDto bookingInDto, @PathVariable long userId) throws UserNotFoundException, ShowtimeNotFoundException{
-        bookingService.addBooking(bookingInDto, userId);
+    public ResponseEntity<BookingOutDto> addBooking(@RequestBody BookingInDto booking, @PathVariable long userId) throws UserNotFoundException, ShowtimeNotFoundException{
+        BookingOutDto newBooking = bookingService.addBooking(booking, userId);
+        return new ResponseEntity<>(newBooking, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/booking/{bookingId}")
@@ -50,8 +53,9 @@ public class BookingController {
     }
 
     @PutMapping("/booking/{bookingId}")
-    public void modifyBooking(@RequestBody Booking booking, @PathVariable long bookingId){
+    public ResponseEntity<Void> modifyBooking(@RequestBody Booking booking, @PathVariable long bookingId){
         bookingService.modifyBooking(booking, bookingId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(BookingNotFoundException.class)

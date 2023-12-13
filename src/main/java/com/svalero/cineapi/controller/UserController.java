@@ -45,8 +45,9 @@ public class UserController {
     }
 
     @PutMapping("/user/{userId}")
-    public void modifyUser(@RequestBody User user, @PathVariable long userId){
+    public ResponseEntity<Void> modifyUser(@RequestBody User user, @PathVariable long userId){
         userService.modifyUser(user, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

@@ -45,8 +45,9 @@ public class CinemaController {
     }
 
     @PutMapping("/cinema/{cinemaId}")
-    public void modifyCinema(@RequestBody Cinema cinema, @PathVariable long cinemaId){
+    public ResponseEntity<Void> modifyCinema(@RequestBody Cinema cinema, @PathVariable long cinemaId){
         cinemaService.modifyCinema(cinema, cinemaId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(CinemaNotFoundException.class)

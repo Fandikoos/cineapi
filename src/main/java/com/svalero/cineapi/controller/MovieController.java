@@ -45,8 +45,9 @@ public class MovieController {
     }
 
     @PutMapping("/movie/{movieId}")
-    public void modifyMovie(@RequestBody Movie movie, @PathVariable long movieId){
+    public ResponseEntity<Void> modifyMovie(@RequestBody Movie movie, @PathVariable long movieId){
         movieService.modifyMovie(movie, movieId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(MovieNotFoundException.class)

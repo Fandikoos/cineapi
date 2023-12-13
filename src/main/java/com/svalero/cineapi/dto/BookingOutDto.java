@@ -13,13 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingOutDto {
 
+    //Añadir butaca, fila,
     private long id;
-    private String screenName;
-
-    private float price;
-    private boolean isSoldOut;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-
+    private String number;
+    private LocalDateTime bookingDate;
+    private int row;
+    private int seat;
+    private boolean menu;
     private List<ShowtimeOutDto> showtimeIds;
 }
