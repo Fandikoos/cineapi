@@ -26,6 +26,10 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> findByDirectorAndGenreAndDuration(String director, String genre, int duration){
+        return movieRepository.findByDirectorAndGenreAndDuration(director, genre, duration);
+    }
+
     public MovieOutDto saveMovie(MovieInDto movieInDto){
         Movie movie = new Movie();
         modelMapper.map(movieInDto, movie);

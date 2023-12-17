@@ -4,14 +4,15 @@ import com.svalero.cineapi.domain.Booking;
 import com.svalero.cineapi.domain.Showtime;
 import com.svalero.cineapi.domain.User;
 import com.svalero.cineapi.dto.BookingInDto;
+import com.svalero.cineapi.dto.BookingOutDto;
 import com.svalero.cineapi.exception.BookingNotFoundException;
 import com.svalero.cineapi.exception.ShowtimeNotFoundException;
 import com.svalero.cineapi.exception.UserNotFoundException;
 import com.svalero.cineapi.repository.BookingRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +29,22 @@ public class BookingService {
     private ShowtimeService showtimeService;
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     private UserService userService;
 
     public List<Booking> findAll(){
         return bookingRepository.findAll();
     }
 
-    public void addBooking(BookingInDto bookingInDto,long userId) throws UserNotFoundException, ShowtimeNotFoundException{
+    public List<Booking> findByIdAndNumberAndBookingDate(long id, String number, LocalDateTime bookingDate){
+        return bookingRepository.findByIdAndNumberAndBookingDate(id, number, bookingDate);
+    }
+
+    public BookingOutDto addBooking(BookingInDto bookingInDto, long userId) throws UserNotFoundException, ShowtimeNotFoundException{
         Booking booking = new Booking();
+        modelMapper.map(bookingInDto, booking);
 
         User user = userService.findById(userId);
         booking.setUser(user);
@@ -49,7 +58,12 @@ public class BookingService {
 
         booking.setNumber(UUID.randomUUID().toString());
         booking.setBookingDate(LocalDateTime.now());
-        bookingRepository.save(booking);
+        Booking newBooking = bookingRepository.save(booking);
+
+        BookingOutDto bookingOutDto = new BookingOutDto();
+        modelMapper.map(newBooking, bookingOutDto);
+
+        return bookingOutDto;
     }
 
     public void removeBooking(long bookingId) throws BookingNotFoundException{
@@ -62,6 +76,8 @@ public class BookingService {
         if (booking.isPresent()){
             Booking existingBooking = booking.get();
             existingBooking.setNumber(newBooking.getNumber());
+            existingBooking.setRow(newBooking.getRow());
+            existingBooking.setSeat(newBooking.getSeat());
             bookingRepository.save(existingBooking);
         }
     }

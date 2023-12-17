@@ -14,7 +14,7 @@ public class UserInDto {
 
     @NotNull(message = "El nombre de usuario es obligatorio")
     private String username;
-    @NotNull
+    @NotNull(message = "la contraseña es obligatoria")
     @Size(min = 4, max = 20)
     private String password;
 

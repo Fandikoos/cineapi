@@ -26,6 +26,9 @@ public class CinemaService {
         return cinemaRepository.findAll();
     }
 
+    public List<Cinema> findByNameAndCapacityAndRating(String name, int capacity, float rating){
+        return cinemaRepository.findByNameAndCapacityAndRating(name, capacity, rating);
+    }
     public CinemaOutDto saveCinema(CinemaInDto cinemaInDto){
         Cinema cinema = new Cinema();
         modelMapper.map(cinemaInDto, cinema);
@@ -50,7 +53,6 @@ public class CinemaService {
             existingCinema.setName(newCinema.getName());
             existingCinema.setCapacity(newCinema.getCapacity());
             existingCinema.setLatitude(newCinema.getLatitude());
-            //existingCinema.setLocation(newCinema.getLocation());
             existingCinema.setLongitude(newCinema.getLongitude());
             existingCinema.setRating(newCinema.getRating());
             cinemaRepository.save(existingCinema);

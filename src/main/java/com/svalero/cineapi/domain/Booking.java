@@ -19,11 +19,15 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
-    //Obligatorio
     private String number;
     @Column(name = "booking_date")
-    //Obligatorio
     private LocalDateTime bookingDate;
+    @Column
+    private int row;
+    @Column
+    private int seat;
+    @Column
+    private boolean menu;
 
     @JsonBackReference("booking_user")
     @ManyToOne

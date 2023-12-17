@@ -20,8 +20,6 @@ public class Cinema {
     private String name;
     @Column
     private int capacity;
-    //@Column
-    //private String location;
     @Column
     private double latitude;
     @Column
