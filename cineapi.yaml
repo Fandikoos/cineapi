@@ -25,6 +25,30 @@ paths:
         - showtime
       summary: Listado de funciones de películas.
       description: Esta operación permite consultar el listado completo de funciones con toda su información.
+      parameters:
+        - name: screenName
+          in: query
+          description: Número de sala de la función
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+        - name: price
+          in: query
+          description: Precio de la función
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 7
+        - name: isSoldOut
+          in: query
+          description: Entradas vendidas o no (Boolean)
+          required: true
+          schema:
+            type: boolean
+            example: true
       responses:
         '200':
           description: Devuelve la lista completa de funciones registradas
@@ -151,6 +175,29 @@ paths:
         - users
       summary: Listado de usuarios.
       description: Esta operación permite consultar el listado completo de usuarios con toda su información.
+      parameters:
+        - name: username
+          in: query
+          description: Nombre de usuario
+          required: true
+          schema:
+            type: string
+            example: Daniel
+        - name: email
+          in: query
+          description: Correo electrónico del usuario
+          required: true
+          schema:
+            type: string
+            example: sahashae@gmail.com
+        - name: phone
+          in: query
+          description: Teléfono del usuario
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 675908432
       responses:
         '200':
           description: Devuelve la lista completa de usuarios registrados
@@ -277,6 +324,31 @@ paths:
         - booking
       summary: Listado de reservas.
       description: Esta operación permite consultar el listado completo de reservas con toda su información.
+      parameters:
+        - name: id
+          in: query
+          description: Id de la reserva
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 1
+        - name: number
+          in: query
+          description: Numero asociado a la reserva
+          required: true
+          schema:
+            type: number
+            format: int64
+            example: 7abc9c42-cba3-4ca8-8062-680edce11b8e
+        - name: bookingDate
+          in: query
+          description: Fecha de la reserva
+          required: true
+          schema:
+            type: number
+            format: 'date-time'
+            example: 2023-11-23T12:36:53.69
       responses:
         '200':
           description: Devuelve la lista completa de películas registradas
@@ -403,6 +475,29 @@ paths:
         - movie
       summary: Listado de películas.
       description: Esta operación permite consultar el listado completo de películas con toda su información.
+      parameters:
+        - name: director
+          in: query
+          description: Nombre del director de la película
+          required: true
+          schema:
+            type: string
+            example: Juan
+        - name: genre
+          in: query
+          description: Genero asociado a la película
+          required: true
+          schema:
+            type: string
+            example: Comedia
+        - name: duration
+          in: query
+          description: Duración de la película en minutos
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 90
       responses:
         '200':
           description: Devuelve la lista completa de películas registradas
@@ -529,6 +624,30 @@ paths:
         - cinema
       summary: Listado de cines.
       description: Esta operación permite consultar el listado completo de cines con toda su información.
+      parameters:
+        - name: name
+          in: query
+          description: Nombre del cine
+          required: true
+          schema:
+            type: string
+            example: Palafox
+        - name: capacity
+          in: query
+          description: Capacidad de personas asociada al cine
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 260
+        - name: rating
+          in: query
+          description: Puntuación del cine
+          required: true
+          schema:
+            type: number
+            format: int32
+            example: 7
       responses:
         '200':
           description: Devuelve la lista completa de cines registrados
