@@ -58,6 +58,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ShowtimeOut'
+              examples:
+                showtime1:
+                  value:
+                    - id: 1
+                      screenNumber: 1
+                      startTime: "2023-01-01T10:00:00Z"
+                      price: 7
+                      isSoldOut: false
+                      endTime: 2023-01-01T12:00:00Z
+                showtime2:
+                  value:
+                    - id: 2
+                      screenNumber: 2
+                      startTime: "2023-01-01T14:00:00Z"
+                      price: 8
+                      isSoldOut: true
+                      endTime: "2023-01-01T16:00:00Z"
         '500':
           description: Error interno en el servidor
           content:
@@ -77,6 +94,14 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ShowtimeIn'
+            examples:
+              showtime1:
+                value:
+                  screenNumber: 3
+                  startTime: "2023-01-01T18:00:00Z"
+                  price: 9
+                  isSoldOut: false
+                  endTime: "2023-01-01T20:00:00Z"
       responses:
         '201':
           description: Función registrada correctamente
@@ -84,6 +109,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShowtimeOut'
+              examples:
+                showtime2:
+                  value:
+                    id: 3
+                    screenNumber: 3
+                    startTime: "2023-01-01T18:00:00Z"
+                    price: 9
+                    isSoldOut: false
+                    endTime: "2023-01-01T20:00:00Z"
         '500':
           description: Error interno en el servidor
           content:
@@ -207,6 +241,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserOut'
+              examples:
+                user1:
+                  value:
+                    - id: 1
+                      username: "Daniel"
+                      email: "sahashae@gmail.com"
+                      phone: 675908432
+                      registrationDate: "2023-01-01"
+                user2:
+                  value:
+                    - id: 2
+                      username: "OtroUsuario"
+                      email: "otrousuario@gmail.com"
+                      phone: 123456789
+                      registrationDate: "2023-01-02"
         '500':
           description: Error interno en el servidor
           content:
@@ -233,6 +282,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserOut'
+              examples:
+                user1:
+                  value:
+                    - id: 3
+                      username: "NuevoUsuario"
+                      password: "contraseña"
+                      email: "nuevousuario@gmail.com"
+                      phone: 987654321
+                      registrationDate: "2023-01-03"
+                user2:
+                  value:
+                    - id: 5
+                      username: "Daniek"
+                      password: "AJDNNADW"
+                      email: "daniel@gmail.com"
+                      phone: 987654321
+                      registrationDate: "2023-01-03"
+
         '500':
           description: Error interno en el servidor
           content:
@@ -358,6 +425,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BookingOut'
+              examples:
+                booking1:
+                  value:
+                    - id: 1
+                      number: "0b1e3747-3c24-4627-aafb-fdbec47947f7"
+                      row: 3
+                      bookingDate: "2023-12-13T20:41:59.437482"
+                      seat: 10
+                      menu: false
+                booking2:
+                  value:
+                    - id: 2
+                      number: "ed5dbf59-9680-4103-add7-34e2333d2e65"
+                      row: 7
+                      bookingDate: "2023-12-13T20:41:59.437482"
+                      seat: 3
+                      menu: true
         '500':
           description: Error interno en el servidor
           content:
@@ -384,6 +468,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingOut'
+              examples:
+                booking1:
+                  value:
+                    - id: 50
+                      number: "cc93b678-6e61-47b8-8707-8cd684542eab"
+                      bookingDate: "2024-01-24T11:15:14.1501796"
+                      row: 3
+                      seat: 10
+                      menu: false
+                      showtimeIds: null
+                booking2:
+                  value:
+                    - id: 60
+                      number: "casjd83-6e61-47b8-8707-8cd6nashd"
+                      bookingDate: "2024-01-24T11:15:14.1501796"
+                      row: 7
+                      seat: 20
+                      menu: true
+                      showtimeIds: null
+
         '500':
           description: Error interno en el servidor
           content:
@@ -507,6 +611,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MovieOut'
+              examples:
+                movie1:
+                  value:
+                    - id: 10
+                      title: Piratas del Caribe
+                      director: Daniel
+                      genre: Terror
+                      duration: "90"
+                      releaseDate: "2023-11-03"
+                movie2:
+                  value:
+                    - id: 20
+                      title: Gol
+                      director: Sebastian
+                      genre: comedia
+                      duration: "100"
+                      releaseDate: "2023-11-03"
         '500':
           description: Error interno en el servidor
           content:
@@ -533,6 +654,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieOut'
+              examples:
+                movie1:
+                  value:
+                    - id: 55
+                      title: Viridiana
+                      director: Julian
+                      genre: Drama
+                      duration: 95
+                      releaseDate: "2023-11-03"
+                movie2:
+                  value:
+                    - id: 55
+                      title: Huertos
+                      director: Sara
+                      genre: Terror
+                      duration: 95
+                      releaseDate: "2023-11-03"
+
         '500':
           description: Error interno en el servidor
           content:
@@ -657,6 +796,25 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CinemaOut'
+              examples:
+                cinema1:
+                  value:
+                    - id: 200
+                      name: Palafox
+                      capacity: "250"
+                      latitude: "9.78438"
+                      longitude: "5.895498934"
+                      rating: "9.0"
+                      openingDate: "2024-01-24"
+                cinema2:
+                  value:
+                    - id: 201
+                      name: Gran Casa
+                      capacity: "280"
+                      latitude: "10.78438"
+                      longitude: "4.895498934"
+                      rating: "5.0"
+                      openingDate: "2023-01-23"
         '500':
           description: Error interno en el servidor
           content:
@@ -683,6 +841,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CinemaOut'
+              examples:
+                cinema1:
+                  value:
+                    - id: 300
+                      name: Puerto Vencia
+                      capacity: 250
+                      latitude: "9.78438"
+                      longitude: "5.895498934"
+                      rating: "9.0"
+                      openingDate: "2024-01-24"
+                cinema2:
+                  value:
+                    - id: 4
+                      name: Palafox
+                      capacity: 180
+                      latitude: "40.78438"
+                      longitude: "20.895498934"
+                      rating: "8.0"
+                      openingDate: "2020-01-20"
+
         '500':
           description: Error interno en el servidor
           content:

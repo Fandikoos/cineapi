@@ -1,0 +1,776 @@
+{
+	"info": {
+		"_postman_id": "5c67c665-bbe5-42e2-86e7-bffec688e661",
+		"name": "cineapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30795432"
+	},
+	"item": [
+		{
+			"name": "cinemas",
+			"item": [
+				{
+					"name": "/cinemas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Palafox\",\n    \"capacity\": \"250\",\n    \"latitude\": \"9.78438\",\n    \"longitude\": \"5.895498934\",\n    \"rating\": \"9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cinemas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinemas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cinemas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinemas?name&capacity&rating (findByNameAndCapacityAndRating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cinemas?name=Torre Outler&capacity=250&rating=5.0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cinemas"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Torre Outler"
+								},
+								{
+									"key": "capacity",
+									"value": "250"
+								},
+								{
+									"key": "rating",
+									"value": "5.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinema/:cinemaId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Venecia\",\n    \"capacity\": \"200\",\n    \"latitude\": \"9.78438\",\n    \"length\": \"5.895498934\",\n    \"rating\": \"8.5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cinema/:cinemaId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cinema",
+								":cinemaId"
+							],
+							"variable": [
+								{
+									"key": "cinemaId",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinema/:cinemaId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cinema/:cinemaId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cinema",
+								":cinemaId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "cinemaId",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "/movies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Zaragoaz\",\n    \"director\": \"Daniel\",\n    \"genre\": \"Terror\",\n    \"duration\": \"90\",\n    \"releaseDate\": \"2023-11-03\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies?director&genre&duration (findByDirectorAndGenreAndDuration)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movies?director=Julian Brand&genre=Comedia&duration=120",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "director",
+									"value": "Julian Brand"
+								},
+								{
+									"key": "genre",
+									"value": "Comedia"
+								},
+								{
+									"key": "duration",
+									"value": "120"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movie/:movieId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Biblioteca\",\n    \"director\": \"Sara\",\n    \"genre\": \"Terror\",\n    \"duration\": \"90\",\n    \"releaseDate\": \"2023-11-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/movie/:movieId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								":movieId"
+							],
+							"variable": [
+								{
+									"key": "movieId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movie/:movieId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/movie/:movieId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								":movieId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "movieId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "showtimes",
+			"item": [
+				{
+					"name": "/showtimes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"screenName\": \"Sala 10\",\n    \"startTime\": \"2023-09-10T16:00:00\",\n    \"price\": \"9\",\n    \"isSoldOut\": \"false\",\n    \"endTime\": \"2023-09-10T18:00:00\"  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/showtimes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtimes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/showtimes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtimes?screenName&price&isSoldOut (findByScreennamePriceAndIssoldout)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/showtimes?screenName=Sala 3&price=7.0&isSoldOut=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"showtimes"
+							],
+							"query": [
+								{
+									"key": "screenName",
+									"value": "Sala 3"
+								},
+								{
+									"key": "price",
+									"value": "7.0"
+								},
+								{
+									"key": "isSoldOut",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtime/:showtimeId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"screenName\": \"Sala 5\",\n    \"startTime\": \"2023-09-10T12:00:00\",\n    \"price\": \"10\",\n    \"isSoldOut\": \"false\",\n    \"endTime\": \"2023-09-10T14:00:00\"  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/showtime/:showtimeId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"showtime",
+								":showtimeId"
+							],
+							"variable": [
+								{
+									"key": "showtimeId",
+									"value": "65"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtime/:showtimeId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/showtime/:showtimeId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"showtime",
+								":showtimeId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "showtimeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bookings",
+			"item": [
+				{
+					"name": "/user/:userId/bookings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeIds\" : [1],\r\n    \"row\" : 3,\r\n    \"seat\" : 10,\r\n    \"menu\" : \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/:userId/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								":userId",
+								"bookings"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bookings?id&number&bookingDate (findByIdNumberAndBookingDate)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bookings?id=1&number=7abc9c42-cba3-4ca8-8062-680edce11b8e&bookingDate=2023-11-23T12:36:53.691787",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "number",
+									"value": "7abc9c42-cba3-4ca8-8062-680edce11b8e"
+								},
+								{
+									"key": "bookingDate",
+									"value": "2023-11-23T12:36:53.691787"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/booking/:bookingId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeIds\" : [2],\r\n    \"row\" : 3,\r\n    \"seat\" : 10,\r\n    \"menu\" : \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking/:bookingId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								":bookingId"
+							],
+							"variable": [
+								{
+									"key": "bookingId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/booking/:bookingId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/booking/:bookingId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								":bookingId"
+							],
+							"variable": [
+								{
+									"key": "bookingId",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "/users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Sara\",\n    \"password\": \"avechucha\",\n    \"email\": \"abeylaura@gmail.com\",\n    \"phone\": \"123456777\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users?username&email&phone (findByUsernameAndEmailAndPhone)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users?username=Manuel&email=abeyeryrgeed@gmail.com&phone=123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Manuel"
+								},
+								{
+									"key": "email",
+									"value": "abeyeryrgeed@gmail.com"
+								},
+								{
+									"key": "phone",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Julian\",\n    \"password\": \"Circulo\",\n    \"phone\": \"123456789\",\n    \"email\": \"aberteeed@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								":userId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
