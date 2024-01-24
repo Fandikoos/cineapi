@@ -17,7 +17,6 @@ public class MovieOutDto {
     private String title;
     private String director;
     private String genre;
-    //Obligatorio
     private int duration;
     private LocalDate releaseDate;
 }
