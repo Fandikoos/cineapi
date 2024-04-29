@@ -11,6 +11,6 @@ public class UserNotFoundException extends Exception{
     }
 
     public UserNotFoundException(long id){
-        super("The user " + id + "doesn't exist");
+        super("The user " + id + " doesn't exist");
     }
 }

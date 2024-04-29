@@ -14,7 +14,7 @@ public class CinemaNotFoundException extends Exception{
     }
 
     public CinemaNotFoundException(long id){
-        super("The cinema " + "doesn't exist");
+        super("The cinema " + " doesn't exist");
     }
 
     public CinemaNotFoundException(CinemaInDto cinema){

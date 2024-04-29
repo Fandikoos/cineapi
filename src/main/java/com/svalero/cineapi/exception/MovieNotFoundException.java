@@ -11,6 +11,6 @@ public class MovieNotFoundException  extends Exception{
     }
 
     public MovieNotFoundException(long id){
-        super("The movie " + id + "doesn't exist");
+        super("The movie " + id + " doesn't exist");
     }
 }
