@@ -1,0 +1,1355 @@
+{
+	"info": {
+		"_postman_id": "5c67c665-bbe5-42e2-86e7-bffec688e661",
+		"name": "cineapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30795432"
+	},
+	"item": [
+		{
+			"name": "cinemas",
+			"item": [
+				{
+					"name": "/cinemas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body contains cinema ID\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Cinema name matches expected\", function() {\r",
+									"    var requestBody = JSON.parse(pm.request.body); // Parseamos el cuerpo de la solicitud JSON a un objeto\r",
+									"    var responseData = pm.response.json(); // Obtener la respuesta como un objeto JSON\r",
+									"    pm.expect(responseData.name).to.equal(requestBody.name); //Vemos si los nombres coinciden\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Aragonia\",\n    \"capacity\": \"250\",\n    \"latitude\": \"9.78438\",\n    \"longitude\": \"5.895498934\",\n    \"rating\": \"9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/cinemas",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinemas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"First cinema name is Venecia\", function(){\r",
+									"    var cinemas = pm.response.json();\r",
+									"    var firstCinemaName = cinemas[0].name;\r",
+									"\r",
+									"    pm.expect(firstCinemaName).to.equal(\"Venecia\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All cinemas have a location defined\", function() {\r",
+									"    var cinemas = pm.response.json(); \r",
+									"    \r",
+									"    cinemas.forEach(function(cinema) {\r",
+									"        pm.expect(cinema.name).to.not.be.undefined; // Verificamos que todos los cines tienen nombre\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/cinemas",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinemas?name&capacity&rating (findByNameAndCapacityAndRating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response contains at least one cinema\", function() {\r",
+									"    var cinemas = pm.response.json();\r",
+									"    pm.expect(cinemas.length).to.be.at.least(1);  // Verificar que se devuelve al menos un cine\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Cinemas have the correct name\", function() {\r",
+									"    var cinemas = pm.response.json();\r",
+									"    cinemas.forEach(function(cinema) {\r",
+									"        pm.expect(cinema.name).to.equal(\"Palafox\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/cinemas?name=Palafox&capacity=250&rating=9.0",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"cinemas"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Palafox"
+								},
+								{
+									"key": "capacity",
+									"value": "250"
+								},
+								{
+									"key": "rating",
+									"value": "9.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinema/:cinemaId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"No errors in response\", function() {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Venecia\",\n    \"capacity\": \"200\",\n    \"latitude\": \"9.78438\",\n    \"length\": \"5.895498934\",\n    \"rating\": \"8.5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/cinema/:cinemaId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"cinema",
+								":cinemaId"
+							],
+							"variable": [
+								{
+									"key": "cinemaId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cinema/:cinemaId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.not.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'The cinema  doesn't exist' message\", function() {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The cinema  doesn't exist\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/cinema/:cinemaId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"cinema",
+								":cinemaId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "cinemaId",
+									"value": "290"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body contains movie ID\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Movie title matches expected\", function() {\r",
+									"    var requestBody = JSON.parse(pm.request.body); // Parseamos el cuerpo de la solicitud JSON a un objeto\r",
+									"    var responseData = pm.response.json(); // Obtener la respuesta como un objeto JSON\r",
+									"    pm.expect(responseData.title).to.equal(requestBody.title); //Vemos si los titulos coinciden\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"El señor de los anillos\",\n    \"director\": \"Daniel\",\n    \"genre\": \"Terror\",\n    \"duration\": \"90\",\n    \"releaseDate\": \"2023-11-03\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/movies",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"First movie name is Biblioteca\", function(){\r",
+									"    var movies = pm.response.json();\r",
+									"    var firstMovieTitle = movies[0].title;\r",
+									"\r",
+									"    pm.expect(firstMovieTitle).to.equal(\"Biblioteca\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All movies have a title defined\", function() {\r",
+									"    var movies = pm.response.json(); \r",
+									"    \r",
+									"    movies.forEach(function(movie) {\r",
+									"        pm.expect(movie.title).to.not.be.undefined; // Verificamos que todos los cines tienen titulo\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/movies",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies?director&genre&duration (findByDirectorAndGenreAndDuration)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response contains at least one movie\", function() {\r",
+									"    var movies = pm.response.json();\r",
+									"    pm.expect(movies.length).to.be.at.least(1);  // Verificar que se devuelve al menos una pelicula\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Movies have the correct title\", function() {\r",
+									"    var movies = pm.response.json();\r",
+									"    movies.forEach(function(movie) {\r",
+									"        pm.expect(movie.title).to.equal(\"Biblioteca\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/movies?director=Sara&genre=Terror&duration=90",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "director",
+									"value": "Sara"
+								},
+								{
+									"key": "genre",
+									"value": "Terror"
+								},
+								{
+									"key": "duration",
+									"value": "90"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movie/:movieId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"No errors in response\", function() {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Biblioteca\",\n    \"director\": \"Sara\",\n    \"genre\": \"Terror\",\n    \"duration\": \"90\",\n    \"releaseDate\": \"2023-11-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/movie/:movieId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"movie",
+								":movieId"
+							],
+							"variable": [
+								{
+									"key": "movieId",
+									"value": "97"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movie/:movieId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.not.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'The movie +id doesn't exist' message\", function() {\r",
+									"    var movieId = pm.request.url.path[1]; // Obtener el movieId de la URL\r",
+									"    var expectedMessage = \"The movie \" + movieId + \" doesn't exist\";\r",
+									"    pm.expect(pm.response.text()).to.include(expectedMessage);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/movie/:movieId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"movie",
+								":movieId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "movieId",
+									"value": "255"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "showtimes",
+			"item": [
+				{
+					"name": "/showtimes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body contains showtime ID\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Showtime screenName matches expected\", function() {\r",
+									"    var requestBody = JSON.parse(pm.request.body); // Parseamos el cuerpo de la solicitud JSON a un objeto\r",
+									"    var responseData = pm.response.json(); // Obtener la respuesta como un objeto JSON\r",
+									"    pm.expect(responseData.screenName).to.equal(requestBody.screenName); //Vemos si los screenname coinciden\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"screenName\": \"Sala 10\",\n    \"startTime\": \"2023-09-10T16:00:00\",\n    \"price\": \"9\",\n    \"isSoldOut\": \"false\",\n    \"endTime\": \"2023-09-10T18:00:00\"  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/showtimes",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtimes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"First showtime screenName is Sala 5\", function(){\r",
+									"    var showtimes = pm.response.json();\r",
+									"    var firstShowtimeScreenName = showtimes[0].screenName;\r",
+									"\r",
+									"    pm.expect(firstShowtimeScreenName).to.equal(\"Sala 5\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All showtimes have a screenName defined\", function() {\r",
+									"    var showtimes = pm.response.json(); \r",
+									"    \r",
+									"    showtimes.forEach(function(showtime) {\r",
+									"        pm.expect(showtime.screenName).to.not.be.undefined; // Verificamos que todos las sesiones tienen sala\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/showtimes",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtimes?screenName&price&isSoldOut (findByScreennamePriceAndIssoldout)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response contains at least one showtime\", function() {\r",
+									"    var showtimes = pm.response.json();\r",
+									"    pm.expect(showtimes.length).to.be.at.least(1);  // Verificar que se devuelve al menos una funcion\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Showtimes have the correct screenName\", function() {\r",
+									"    var showtimes = pm.response.json();\r",
+									"    showtimes.forEach(function(showtime) {\r",
+									"        pm.expect(showtime.screenName).to.equal(\"Sala 10\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/showtimes?screenName=Sala 10&price=9.0&isSoldOut=false",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"showtimes"
+							],
+							"query": [
+								{
+									"key": "screenName",
+									"value": "Sala 10"
+								},
+								{
+									"key": "price",
+									"value": "9.0"
+								},
+								{
+									"key": "isSoldOut",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtime/:showtimeId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"No errors in response\", function() {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"screenName\": \"Sala 5\",\n    \"startTime\": \"2023-09-10T12:00:00\",\n    \"price\": \"10\",\n    \"isSoldOut\": \"false\",\n    \"endTime\": \"2023-09-10T14:00:00\"  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/showtime/:showtimeId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"showtime",
+								":showtimeId"
+							],
+							"variable": [
+								{
+									"key": "showtimeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/showtime/:showtimeId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.not.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'The showtime +id doesn't exist' message\", function() {\r",
+									"    var showtimeId = pm.request.url.path[1]; // Obtener el showtimeId de la URL\r",
+									"    var expectedMessage = \"The showtime \" + showtimeId + \" doesn't exist\";\r",
+									"    pm.expect(pm.response.text()).to.include(expectedMessage);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/showtime/:showtimeId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"showtime",
+								":showtimeId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "showtimeId",
+									"value": "66"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bookings",
+			"item": [
+				{
+					"name": "/user/:userId/bookings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body contains bookings ID\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is JSON\", function() {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeIds\" : [2],\r\n    \"row\" : 3,\r\n    \"seat\" : 10,\r\n    \"menu\" : \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/user/:userId/bookings",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"user",
+								":userId",
+								"bookings"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bookings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"First booking number is ed5dbf59-9680-4103-add7-34e2333d2e65\", function(){\r",
+									"    var bookings = pm.response.json();\r",
+									"    var firstBookingNumber = bookings[0].number;\r",
+									"\r",
+									"    pm.expect(firstBookingNumber).to.equal(\"ed5dbf59-9680-4103-add7-34e2333d2e65\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All bookings have a number defined\", function() {\r",
+									"    var bookings = pm.response.json(); \r",
+									"    \r",
+									"    bookings.forEach(function(booking) {\r",
+									"        pm.expect(booking.number).to.not.be.undefined; // Verificamos que todos las funciones tienen numero asignado\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/bookings",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bookings?id&number&bookingDate (findByIdNumberAndBookingDate)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response contains at least one booking\", function() {\r",
+									"    var bookings = pm.response.json();\r",
+									"    pm.expect(bookings.length).to.be.at.least(1);  // Verificar que se devuelve al menos una reserva\r",
+									"});\r",
+									"\r",
+									"pm.test(\"bookings have the correct number\", function() {\r",
+									"    var bookings = pm.response.json();\r",
+									"    bookings.forEach(function(booking) {\r",
+									"        pm.expect(booking.number).to.equal(\"ed5dbf59-9680-4103-add7-34e2333d2e65\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/bookings?id=65&number=ed5dbf59-9680-4103-add7-34e2333d2e65&bookingDate=2024-01-24T11:11:32.299023",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "65"
+								},
+								{
+									"key": "number",
+									"value": "ed5dbf59-9680-4103-add7-34e2333d2e65"
+								},
+								{
+									"key": "bookingDate",
+									"value": "2024-01-24T11:11:32.299023"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/booking/:bookingId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"No errors in response\", function() {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeIds\" : [2],\r\n    \"row\" : 3,\r\n    \"seat\" : 10,\r\n    \"menu\" : \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/booking/:bookingId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"booking",
+								":bookingId"
+							],
+							"variable": [
+								{
+									"key": "bookingId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/booking/:bookingId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.not.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'The booking +id doesn't exist' message\", function() {\r",
+									"    var bookingId = pm.request.url.path[1]; // Obtener el bookingId de la URL\r",
+									"    var expectedMessage = \"The booking \" + bookingId + \" doesn't exist\";\r",
+									"    pm.expect(pm.response.text()).to.include(expectedMessage);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/booking/:bookingId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"booking",
+								":bookingId"
+							],
+							"variable": [
+								{
+									"key": "bookingId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body contains showtime ID\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User username matches expected\", function() {\r",
+									"    var requestBody = JSON.parse(pm.request.body); // Parseamos el cuerpo de la solicitud JSON a un objeto\r",
+									"    var responseData = pm.response.json(); // Obtener la respuesta como un objeto JSON\r",
+									"    pm.expect(responseData.username).to.equal(requestBody.username); //Vemos si los username coinciden\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Daniel\",\n    \"password\": \"asdewsd\",\n    \"email\": \"abeydaniel@gmail.com\",\n    \"phone\": \"123456777\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/users",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"First user username is Julian\", function(){\r",
+									"    var users = pm.response.json();\r",
+									"    var firstUserUsername = users[0].username;\r",
+									"\r",
+									"    pm.expect(firstUserUsername).to.equal(\"Julian\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All users have a username defined\", function() {\r",
+									"    var users = pm.response.json(); \r",
+									"    \r",
+									"    users.forEach(function(user) {\r",
+									"        pm.expect(user.username).to.not.be.undefined; // Verificamos que todos los usuarios tienen nombre de usuario\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/users",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users?username&email&phone (findByUsernameAndEmailAndPhone)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response contains at least one user\", function() {\r",
+									"    var users = pm.response.json();\r",
+									"    pm.expect(users.length).to.be.at.least(1);  // Verificar que se devuelve al menos un usuario\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Users have the correct username\", function() {\r",
+									"    var users = pm.response.json();\r",
+									"    users.forEach(function(user) {\r",
+									"        pm.expect(user.username).to.equal(\"Sara\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/users?username=Sara&email=abeylaura@gmail.com&phone=123456777",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Sara"
+								},
+								{
+									"key": "email",
+									"value": "abeylaura@gmail.com"
+								},
+								{
+									"key": "phone",
+									"value": "123456777"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"No errors in response\", function() {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Julian\",\n    \"password\": \"Circulo\",\n    \"phone\": \"123456789\",\n    \"email\": \"aberteeed@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{port}}/user/:userId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"user",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function() {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function() {\r",
+									"    pm.expect(pm.response.text()).to.be.not.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'The user +id doesn't exist' message\", function() {\r",
+									"    var userId = pm.request.url.path[1]; // Obtener el bookingId de la URL\r",
+									"    var expectedMessage = \"The user \" + userId + \" doesn't exist\";\r",
+									"    pm.expect(pm.response.text()).to.include(expectedMessage);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{port}}/user/:userId",
+							"host": [
+								"{{host}}{{port}}"
+							],
+							"path": [
+								"user",
+								":userId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "190"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
